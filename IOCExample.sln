@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33815.320
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IOCExample", "IOCExample\IOCExample.csproj", "{1B32DD24-FA4F-4D28-913A-868866A531FD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1B32DD24-FA4F-4D28-913A-868866A531FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B32DD24-FA4F-4D28-913A-868866A531FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B32DD24-FA4F-4D28-913A-868866A531FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B32DD24-FA4F-4D28-913A-868866A531FD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {82874D9C-1621-43D6-913A-E18A8176E140}
+	EndGlobalSection
+EndGlobal

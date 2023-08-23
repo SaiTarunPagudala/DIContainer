@@ -1,0 +1,9 @@
+#ignoring vs folder
+.vs/*
+
+#ignoring bin folder
+IOCExample/bin/*
+
+#ignoring obj folder
+IOCExample/obj/*
+
