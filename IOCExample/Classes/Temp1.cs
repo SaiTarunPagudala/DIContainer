@@ -4,13 +4,7 @@ namespace IOCExample.Classes
 {
     public class Temp1 : ITemp1
     {
-        public string Name { get; set; }
-
-        public Temp1()
-        {
-
-        }
-
+        public string temp1Name { get; set; }
 
     }
 }

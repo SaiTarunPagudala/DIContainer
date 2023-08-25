@@ -7,3 +7,8 @@ IOCExample/bin/*
 #ignoring obj folder
 IOCExample/obj/*
 
+#ignoring tests bin folder
+IOCExampleTests/bin*
+
+#ignoring tests obj folder
+IOCExampleTests/obj*

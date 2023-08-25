@@ -16,7 +16,7 @@ namespace IOCExample.Container
             var definitionType = typeof(definitionObject);
             var implementationType = typeof(implementationObject);
             var registration = new Registration(definitionType, implementationType, registerType);
-            _dependenciesDictionary.Add(definitionType.ToString() + name, registration);
+            _dependenciesDictionary.Add(definitionType.FullName + name, registration);
         }
 
         public T Resolve<T>(string name = "")
@@ -24,7 +24,7 @@ namespace IOCExample.Container
             var registration = _dependenciesDictionary[(typeof(T).FullName) + name];
             if (registration.LifeofRegister == LifeTime.Transient)
             {
-                return (T)Activator.CreateInstance(registration.Implementation);
+                return (T)Load(registration, true);
             }
             return (T)registration.CurrentObject;
         }
@@ -34,19 +34,18 @@ namespace IOCExample.Container
             foreach (var dict in _dependenciesDictionary)
             {
                 var registration = dict.Value;
-                registration.CurrentObject = Load(registration);
-                _dependenciesDictionary[dict.Key] = registration;
+                if (registration.LifeofRegister == LifeTime.Singleton)
+                {
+                    registration.CurrentObject = Load(registration);
+                    _dependenciesDictionary[dict.Key] = registration;
+                }
             }
         }
 
         #region private methods
-        private Object Load(Registration registration)
+        private Object Load(Registration registration, bool isTransient = false)
         {
-            if (registration.LifeofRegister == LifeTime.Transient)
-            {
-                return Activator.CreateInstance(registration.Implementation);
-            }
-            if (registration.IsLoaded)
+            if (!isTransient && registration.IsLoaded)
             {
                 return registration.CurrentObject;
             }
@@ -58,7 +57,7 @@ namespace IOCExample.Container
                 var type = param.ParameterType;
                 if (_dependenciesDictionary.ContainsKey(type.FullName))
                 {
-                    var paramobj = Load(_dependenciesDictionary[type.FullName]);
+                    var paramobj = Load(_dependenciesDictionary[type.FullName], isTransient);
                     newparameters.Add(paramobj);
                 }
                 else

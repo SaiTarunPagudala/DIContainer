@@ -2,6 +2,6 @@
 {
     public interface ITemp1
     {
-        public string Name { get; set; }
+        public string temp1Name { get; set; }
     }
 }

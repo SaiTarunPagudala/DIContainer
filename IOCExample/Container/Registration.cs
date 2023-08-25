@@ -13,7 +13,7 @@ namespace IOCExample.Container
 
         public bool IsLoaded { get; set; }
 
-        public Registration(Type Definition, Type Implementation, LifeTime LifeofRegister, object CurrentObject=null)
+        public Registration(Type Definition, Type Implementation, LifeTime LifeofRegister, object CurrentObject = null)
         {
             this.Definition = Definition;
             this.Implementation = Implementation;

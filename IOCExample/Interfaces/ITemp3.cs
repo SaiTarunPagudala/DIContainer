@@ -2,6 +2,9 @@
 {
     public interface ITemp3
     {
-        public ITemp1 tempobj { get; set; }
+        public string temp3Name { get; set; }
+        public ITemp1 temp1obj { get; set; }
+
+        public ITemp2 temp2obj { get; set; }
     }
 }
