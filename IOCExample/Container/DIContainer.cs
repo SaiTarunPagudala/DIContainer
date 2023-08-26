@@ -45,7 +45,7 @@ namespace IOCExample.Container
         #region private methods
         private Object Load(Registration registration, bool isTransient = false)
         {
-            if (!isTransient && registration.IsLoaded)
+            if (!isTransient && registration.CurrentObject!=null)
             {
                 return registration.CurrentObject;
             }
@@ -65,7 +65,6 @@ namespace IOCExample.Container
                     newparameters.Add(Activator.CreateInstance(type));
                 }
             }
-            registration.IsLoaded = true;
             if (newparameters.Count > 0)
             {
                 return constructors.Invoke(newparameters.ToArray());

@@ -11,8 +11,6 @@ namespace IOCExample.Container
 
         public Object CurrentObject { get; set; }
 
-        public bool IsLoaded { get; set; }
-
         public Registration(Type Definition, Type Implementation, LifeTime LifeofRegister, object CurrentObject = null)
         {
             this.Definition = Definition;

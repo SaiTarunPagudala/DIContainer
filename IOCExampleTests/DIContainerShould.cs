@@ -99,13 +99,74 @@ public class DIContainerShould
         temp3result.temp1obj.temp1Name = "Changed by Temp1";
         temp3result.temp2obj.temp2Name = "Changed by Temp2";
         temp3result = diContainer.Resolve<ITemp3>();
-
         Assert.Null(temp3result.temp1obj.temp1Name);
         Assert.Null(temp3result.temp2obj.temp2Name);
         Assert.Null(temp3result.temp3Name);
         Assert.Equal("Changed by Temp1", temp1result.temp1Name);
         Assert.Equal("Changed by Temp2", temp2result.temp2Name);
+    }
 
+    [Fact]
+    public void CheckTransientInsideTransient()
+    {
+        var diContainer = new DIContainer();
+        diContainer.Register<ITemp1, Temp1>(LifeTime.Transient);
+        diContainer.Register<ITemp2, Temp2>(LifeTime.Transient);
+        diContainer.Register<ITemp3, Temp3>(LifeTime.Transient);
+        diContainer.LoadAll();
+        var temp1result = diContainer.Resolve<ITemp1>();
+        var temp2result = diContainer.Resolve<ITemp2>();
+        var temp3result = diContainer.Resolve<ITemp3>();
+        temp1result.temp1Name = "Changed by Temp1";
+        temp2result.temp2Name = "Changed by Temp2";
+        Assert.Null(temp3result.temp3Name);
+        Assert.Null(temp3result.temp1obj.temp1Name);
+        Assert.Null(temp3result.temp2obj.temp2Name);
+        temp3result.temp3Name = "Changed by Temp3";
+        temp3result.temp1obj.temp1Name = "Changed by Temp1";
+        temp3result.temp2obj.temp2Name = "Changed by Temp2";
+        temp3result = diContainer.Resolve<ITemp3>();
+        temp1result = diContainer.Resolve<ITemp1>();
+        temp2result = diContainer.Resolve<ITemp2>();
+        Assert.Null(temp3result.temp1obj.temp1Name);
+        Assert.Null(temp3result.temp2obj.temp2Name);
+        Assert.Null(temp3result.temp3Name);
+        Assert.Null(temp1result.temp1Name);
+        Assert.Null(temp2result.temp2Name);
+    }
+
+    [Fact]
+    public void CheckSingleTonWithName()
+    {
+        var diContainer = new DIContainer();
+        diContainer.Register<ITemp1, Temp1>(LifeTime.Singleton);
+        diContainer.Register<ITemp1, Temp4>(LifeTime.Singleton, "Temp4");
+        diContainer.LoadAll();
+        var temp1result = diContainer.Resolve<ITemp1>();
+        var temp4result = diContainer.Resolve<ITemp1>("Temp4");
+        temp1result.temp1Name = "Changed by Temp1";
+        temp4result.temp1Name = "Changed by Temp4";
+        temp1result = diContainer.Resolve<ITemp1>();
+        temp4result = diContainer.Resolve<ITemp1>("Temp4");
+        Assert.Equal("Changed by Temp1", temp1result.temp1Name);
+        Assert.Equal("Changed by Temp4", temp4result.temp1Name);
+    }
+
+    [Fact]
+    public void CheckTransientWithName()
+    {
+        var diContainer = new DIContainer();
+        diContainer.Register<ITemp1, Temp1>(LifeTime.Transient);
+        diContainer.Register<ITemp1, Temp4>(LifeTime.Transient, "Temp4");
+        diContainer.LoadAll();
+        var temp1result = diContainer.Resolve<ITemp1>();
+        var temp4result = diContainer.Resolve<ITemp1>("Temp4");
+        temp1result.temp1Name = "Changed by Temp1";
+        temp4result.temp1Name = "Changed by Temp4";
+        temp1result = diContainer.Resolve<ITemp1>();
+        temp4result = diContainer.Resolve<ITemp1>("Temp4");
+        Assert.Null(temp1result.temp1Name);
+        Assert.Null(temp4result.temp1Name);
     }
 
 }
