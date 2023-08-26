@@ -60,10 +60,6 @@ namespace IOCExample.Container
                     var paramobj = Load(_dependenciesDictionary[type.FullName], isTransient);
                     newparameters.Add(paramobj);
                 }
-                else
-                {
-                    newparameters.Add(Activator.CreateInstance(type));
-                }
             }
             if (newparameters.Count > 0)
             {
