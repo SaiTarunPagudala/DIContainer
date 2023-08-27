@@ -49,6 +49,12 @@ public class DIContainerShould
         var temp2result = diContainer.Resolve<ITemp2>();
         temp2result.temp2Name = "Changed by Temp2";
         temp3result = diContainer.Resolve<ITemp3>();
+        var temp1dependenciesCount = diContainer.GetDependencies<ITemp1>().Count();
+        Assert.Equal(0, temp1dependenciesCount);
+        var temp2dependenciesCount = diContainer.GetDependencies<ITemp2>().Count();
+        Assert.Equal(0, temp2dependenciesCount);
+        var temp3dependenciesCount = diContainer.GetDependencies<ITemp3>().Count();
+        Assert.Equal(2, temp3dependenciesCount);
         Assert.Equal("Changed by Temp1", temp3result.temp1obj.temp1Name);
         Assert.Equal("Changed by Temp2", temp3result.temp2obj.temp2Name);
         Assert.Equal("Changed by Temp3", temp3result.temp3Name);
@@ -77,6 +83,12 @@ public class DIContainerShould
         Assert.Equal("Changed by Temp1", temp3result.temp1obj.temp1Name);
         Assert.Equal("Changed by Temp2", temp3result.temp2obj.temp2Name);
         Assert.Equal("Changed by Temp3", temp3result.temp3Name);
+        var temp1dependenciesCount = diContainer.GetDependencies<ITemp1>().Count();
+        Assert.Equal(0, temp1dependenciesCount);
+        var temp2dependenciesCount = diContainer.GetDependencies<ITemp2>().Count();
+        Assert.Equal(0, temp2dependenciesCount);
+        var temp3dependenciesCount = diContainer.GetDependencies<ITemp3>().Count();
+        Assert.Equal(2, temp3dependenciesCount);
     }
 
     [Fact]
@@ -104,6 +116,12 @@ public class DIContainerShould
         Assert.Null(temp3result.temp3Name);
         Assert.Equal("Changed by Temp1", temp1result.temp1Name);
         Assert.Equal("Changed by Temp2", temp2result.temp2Name);
+        var temp1dependenciesCount = diContainer.GetDependencies<ITemp1>().Count();
+        Assert.Equal(0, temp1dependenciesCount);
+        var temp2dependenciesCount = diContainer.GetDependencies<ITemp2>().Count();
+        Assert.Equal(0, temp2dependenciesCount);
+        var temp3dependenciesCount = diContainer.GetDependencies<ITemp3>().Count();
+        Assert.Equal(2, temp3dependenciesCount);
     }
 
     [Fact]
@@ -133,6 +151,12 @@ public class DIContainerShould
         Assert.Null(temp3result.temp3Name);
         Assert.Null(temp1result.temp1Name);
         Assert.Null(temp2result.temp2Name);
+        var temp1dependenciesCount = diContainer.GetDependencies<ITemp1>().Count();
+        Assert.Equal(0, temp1dependenciesCount);
+        var temp2dependenciesCount = diContainer.GetDependencies<ITemp2>().Count();
+        Assert.Equal(0, temp2dependenciesCount);
+        var temp3dependenciesCount = diContainer.GetDependencies<ITemp3>().Count();
+        Assert.Equal(2, temp3dependenciesCount);
     }
 
     [Fact]
@@ -169,6 +193,17 @@ public class DIContainerShould
         Assert.Null(temp4result.temp1Name);
     }
 
+    [Fact]
+    public void AssertCircularDependency()
+    {
+        var diContainer = new DIContainer();
+        diContainer.Register<ITemp1, Class1>(LifeTime.Singleton);
+        diContainer.Register<ITemp2, Class2>(LifeTime.Singleton);
+        diContainer.Register<ITemp3, Class3>(LifeTime.Singleton);
+        Action act = () => diContainer.LoadAll(); ;
+        Exception exception = Assert.Throws<Exception>(act);
+        Assert.Equal("Fail to Load due to Ciruclar dependency", exception.Message);
+    }
 }
 
 

@@ -11,12 +11,15 @@ namespace IOCExample.Container
 
         public Object CurrentObject { get; set; }
 
+        public List<Type> ListOfDependencies { get; set; }
+
         public Registration(Type Definition, Type Implementation, LifeTime LifeofRegister, object CurrentObject = null)
         {
             this.Definition = Definition;
             this.Implementation = Implementation;
             this.LifeofRegister = LifeofRegister;
             this.CurrentObject = CurrentObject;
+            ListOfDependencies = new List<Type>();
         }
     }
 }
