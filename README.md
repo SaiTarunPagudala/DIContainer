@@ -10,5 +10,5 @@ The project includes a dedicated test suite that runs various scenarios to demon
 
 Getting Started
 Clone the repository.
-This project is written in net6.0
+This project is written in net6.0.
 Run the test suite to see the DI Container in action and verify its functionality.
